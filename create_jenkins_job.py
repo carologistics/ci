@@ -82,7 +82,7 @@ def main(argv=None):
         '--jenkins-url', '-u', default='https://ci.ros2.org',
         help="Url of the jenkins server to which the job should be added")
     parser.add_argument(
-        '--ci-scripts-repository', default='git@github.com:ros2/ci.git',
+        '--ci-scripts-repository', default='git@github.com:carologistics/ci.git',
         help="repository from which ci scripts should be cloned"
     )
     parser.add_argument(

@@ -150,32 +150,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y lcov
 # merged use the fork with the fix.
 RUN pip3 install -U git+https://github.com/ahcorde/lcov-to-cobertura-xml@master
 
-# Install the Connext binary from the OSRF repositories.
-RUN if test \( ${PLATFORM} = x86 -a ${INSTALL_CONNEXT_DEBS} = true \); then apt-get update && RTI_NC_LICENSE_ACCEPTED=yes apt-get install -y rti-connext-dds-6.0.1; fi
-
-# Install the RTI dependencies.
-RUN if test ${PLATFORM} = x86; then apt-get update && apt-get install --no-install-recommends -y default-jre-headless; fi
-
-# Install dependencies for RTI web binaries install script.
-RUN apt-get update && apt-get install --no-install-recommends -y python3-pexpect
-
-# Get and install the RTI web binaries.
-# Connext 6.0.1 for jammy, the evaluation bundles don't contain security extensions so we need to distribute the pro binaries to ourselves.
-COPY rticonnextdds-src/ /tmp/rticonnextdds-src
-RUN for splitpkg in \
-  /tmp/rticonnextdds-src/rti_connext_dds-6.0.1-pro-host-x64Linux.run \
-  /tmp/rticonnextdds-src/rti_connext_dds-6.0.1.25-pro-host-x64Linux.rtipkg \
-  /tmp/rticonnextdds-src/rti_connext_dds-6.0.1.25-pro-target-x64Linux4gcc7.3.0.rtipkg; do \
-    cat $(echo ${splitpkg}.0?? | sort) > $splitpkg; \
-  done
-RUN chmod 755 /tmp/rticonnextdds-src/rti_connext_dds-6.0.1-pro-host-x64Linux.run
-
-# Add the connextdds installation script used in entry_point.sh
-ADD rti_web_binaries_install_script.py /tmp/rti_web_binaries_install_script.py
-
-# Add the RTI license file.
-ADD rticonnextdds-license/rti_license.dat /tmp/rti_license.dat
-
 # Install the eProsima dependencies.
 RUN apt-get update && apt-get install --no-install-recommends -y libasio-dev libssl-dev libtinyxml2-dev valgrind
 

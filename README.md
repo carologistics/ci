@@ -31,7 +31,7 @@ $ python3 create_jenkins_job.py --jenkins-url http://jenkins.example.com --commi
 
 You can also change the default location from which these CI scripts are pulled with options `--ci-scripts-repository` and `--ci-scripts-default-branch`.
 They allow you to change the default location from which to get the CI scripts, which is useful if you have forked ros2/ci.
-The defaults are `git@github.com:ros2/ci.git` and `master` respectively.
+The defaults are `git@github.com:carologistics/ci.git` and `master` respectively.
 The branch can be changed when running the job (it's a job parameter) to make it easy to test changes to the CI scripts using a branch on the main repository.
 
 ## Adjusting batch CI jobs
